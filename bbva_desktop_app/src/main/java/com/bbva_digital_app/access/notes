@@ -1,0 +1,54 @@
+proceso de selección de modo de ingreso
+
+A continuación se presentan las variables bandera las cuales nos avisan el modo
+de ingreso
+
+1) Ingresar con nombre de usuario   -> login_with_username
+2) Ingresar con correo electrónico  -> Login_with_email
+
+
+Cuando se inicializa el Frame...
+
+  A) Por selección predeterminada se aplica:
+     login_with_username = true
+     login_with_email    = false
+     
+    Indicandole al sistema que el usuario ingresara mediante su nombre de usuario
+    (este modo de ingreso el usuario podrá modificarla)
+    
+  B) Por selección manual (el usuario elige)
+     
+     por lo que los controladores boleanos que nos será en base a su elección:
+     
+     si (el usuario elige ingresar con email)
+        login_with_username = false
+        login_with_email    = true
+        
+     si (el usuario elige ingresar con usuario)
+        login_with_username = true
+        login_with_email    = false
+         
+=============================================================================================
+
+Componentes de la GUI que se verán comprometidos:
+
+   lbl_input_username -> (cambiar nombre) -> lbl_login_mode
+   lbl_ico_user       -> (cambiar nombre) -> lbl_login_mode_illustration
+   txt_input_username -> (cambiar nombre) -> text_box_credential 
+
+componente nuevos que se agregarán:
+
+   JLabel lbl_login_selection_mode
+
+=============================================================================================
+
+Modificación de los elementos visules de la GUI
+
+   Si login_with_username == true OR initializationEvent == launch
+       setPlaceHolder("Escribe tu usuario")
+       text_box_credential.setText(getPlaceHolder())
+       text_box_credential.setText("Nombre de usuario")
+       lbl_login_mode_illustration.setIcon(...)
+       login_with_username = true
+       login_with_email    = false
+

@@ -1,0 +1,57 @@
+package main.resources.control.manager.clientControl;
+
+import java.util.ArrayList;
+
+import main.java.com.bbva_digital_app.register.client.LaunchRegister;
+
+public class AgeControl{
+	
+	private int size = 0;
+	private int calls = 0;
+	private ArrayList<Object> boxes = new ArrayList<Object>();
+	ArrayList<Object> items = new ArrayList<Object>();;
+	private LaunchRegister register;
+	
+	public AgeControl() {
+		//setComponents();
+	}
+	
+	public void setCalls(int calls) {
+		this.calls++;
+	}
+	
+	public int getCalls() {
+		return calls;
+	}
+	
+	public void setList() {
+		register = new LaunchRegister();
+		boxes.add(register.box_day.getSelectedItem());
+		boxes.add(register.box_month.getSelectedItem());
+		boxes.add(register.box_year.getSelectedItem());
+		size = boxes.size();
+	}
+	
+	public void setListItems() {
+		items.add("Día");
+		items.add("Mes");
+		items.add("Año");
+	}
+	
+	public ArrayList<Object> getListItems(){
+		return items;
+	}
+	
+	public ArrayList<Object> getList() {
+		return boxes;
+	}
+	
+	public boolean verifyEmptyBox() {
+		for(int i = 0; i < size; i++) {
+			if(String.valueOf(boxes.get(i).equals(items.get(i))) != null) {
+				return true;
+			}
+		}
+		return false;
+	}
+}

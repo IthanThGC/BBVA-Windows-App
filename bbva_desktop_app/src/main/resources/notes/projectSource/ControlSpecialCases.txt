@@ -1,0 +1,76 @@
+/*Seven month they're have 31th days*/
+	@SuppressWarnings("unused")
+	private final Object DAYS_OF_THE_MONTHS_CATEGORY1[] = {
+			"01","02","03","04","05","06","07","08",
+			"09","10","11","12","13","14","15","16",
+			"17","18","19","20","21","22","23","24",
+			"25","26","27","28","29","30","31"
+	};
+	/*Four month they're have 30th days*/
+	@SuppressWarnings("unused")
+	private final Object DAYS_OF_THE_MONTHS_CATEGORY2[] = {
+			"01","02","03","04","05","06","07","08",
+			"09","10","11","12","13","14","15","16",
+			"17","18","19","20","21","22","23","24",
+			"25","26","27","28","29","30"
+	};
+	/*Only 1 month they're have 28th days*/
+	@SuppressWarnings("unused")
+	private final Object DAYS_OF_THE_MONTH_CATEGORY3[] = {
+			"01","02","03","04","05","06","07","08",
+			"09","10","11","12","13","14","15","16",
+			"17","18","19","20","21","22","23","24",
+			"25","26","27","28"
+	};
+	
+	
+	in the method -> validate();
+	/*if(entryMonth[0] < POSITION_OF_ACTUAL_MONTH[0] 
+										&& entryMonth[1] < POSITION_OF_ACTUAL_MONTH[1]
+										|| (entryMonth[0] == 0 
+										         && entryMonth[1] == 0
+										         && POSITION_OF_ACTUAL_MONTH[0] >= 0 
+										         && POSITION_OF_ACTUAL_MONTH[1] >= 0))
+								{
+									return true;
+								}*/
+								
+    in the method -> validate();
+    final int COLUMN = 3;
+		final int ROW = 4;
+		int[] entryMonth = {0,0}; //January -> default
+		
+		for(int i = 0; i < ROW; i++) {
+			for(int j = 0; j < COLUMN; j++) {
+				
+				while(month.equals(MONTHS_BIDIMENSIONAL_FORMAT[i][j])) {
+					entryMonth[0] = i;
+					entryMonth[1] = j;
+				
+					if((ACTUAL_YEAR - year >= LEGAL_AGE)) {//BASE CONDITION
+						//CASE 1
+						if(entryMonth[0] == POSITION_OF_ACTUAL_MONTH[0]
+								&& entryMonth[1] == POSITION_OF_ACTUAL_MONTH[1]) {
+							if(day <= ACTUAL_DAY) return true;
+							return false;
+						}else {
+							//CASE 2
+							if(entryMonth[0] > POSITION_OF_ACTUAL_MONTH[0]
+								&& entryMonth[1] > POSITION_OF_ACTUAL_MONTH[1]) {
+								
+							}else {
+								//CASE 3 (multiple cases)
+								if(entryMonth[0] == 0 && POSITION_OF_ACTUAL_MONTH[0] == 0) {
+									
+								}
+								if(POSITION_OF_ACTUAL_MONTH[0] > 0 && entryMonth[0] == 0) {
+									return true;
+								}
+							}
+						}
+					}
+					break;
+				}//COLUMN ITERATOR
+			}//ROW ITERATOR
+		}
+		return false;

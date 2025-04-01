@@ -1,0 +1,1373 @@
+package main.java.com.bbva_digital_app.register.client;
+
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Calendar;
+
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JSeparator;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.border.EmptyBorder;
+
+import main.java.com.bbva_digital_app.access.LoginApplication;
+import main.java.com.bbva_digital_app.popup.RegisterAdditionalEmail;
+
+import main.resources.visual.manager.classes.IconImageManager;
+import main.resources.visual.swingcomponents.Link;
+import main.resources.visual.swingcomponents.RoundedPanel;
+import main.resources.control.manager.dialogs.Dialogs;
+
+public class LaunchRegister extends JFrame {
+
+	private static final long serialVersionUID = 2536853007280556436L;
+
+	private int sec_form = 0;
+
+	private JPanel Frame;
+		
+	//Instance of Login´s window
+	private LoginApplication login = new LoginApplication();
+	
+	//external material
+	private final String official_web_site_curp = "https://www.gob.mx/curp/";
+	private final Link consult_curp = new Link(official_web_site_curp);
+	private final String web_site_cp = "https://www.correosdemexico.gob.mx/sslservicios/consultacp/descarga.aspx";
+	private final Link consult_cp = new Link(web_site_cp);
+	
+	private IconImageManager icon = new IconImageManager();
+	private RegisterAdditionalEmail additionalEmail = new RegisterAdditionalEmail();
+	private Dialogs dialog = new Dialogs();
+	
+	private JPanel Container;
+	private JPanel content_logo;
+	private JLabel lbl_official_logo;
+	
+	private JPanel container_progress, content_progress;
+	private JPanel header;
+	private JPanel container_form_section1;
+	private JPanel container_form_section2;
+	private JPanel container_form_section3;
+	private JPanel container_form_section4;	
+	private JPanel btn_move_right, btn_move_left;
+	private JPanel footer;
+	
+	private JLabel lbl_title_header;
+	private JLabel lbl_indications_form;
+	private JLabel lbl_text_right, lbl_text_left, lbl_icon_move_right;
+	private boolean move_to_right = false;
+	private boolean move_to_left = false;
+	private JLabel lbl_have_account;
+	private JLabel lbl_login_app;
+	
+	//components for progress registration
+	private JLabel lbl_icon_step1, lbl_icon_step2, lbl_icon_step3, lbl_icon_step4;
+	private JLabel lbl_step1, lbl_step2, lbl_step3, lbl_step4;
+	private JSeparator jsp1, jsp2, jsp3, jsp4; 
+	private Color setForegroundColorCompleted = new Color(46,204,113);
+	private Color setForegroundColorSelectedOrEntered = new Color(255,255,255);
+	private Color setForegroundColorInactive = new Color(170,186,187);
+	
+	//components for progress registration
+		/*private JLabel lbl_icon_step1, lbl_icon_step2, lbl_icon_step3, lbl_icon_step4;
+		private JLabel lbl_step1, lbl_step2, lbl_step3, lbl_step4;
+		private JSeparator jsp1, jsp2, jsp3, jsp4; 
+		private Color setForegroundColorCompleted = new Color(46,204,113);
+		private Color setForegroundColorSelectedOrEntered = new Color(255,255,255);
+		private Color setForegroundColorInactive = new Color(170,186,187);*/
+	
+	//components for section1
+	private JLabel lbl_input_name,lbl_input_lastnameP,lbl_input_lastnameM;
+	private JLabel lbl_input_dateborn;
+	private JLabel lbl_input_curp, lbl_consult_curp;
+	public JTextField txt_name, txt_last_nameP, txt_last_nameM;
+	public JTextField txt_curp;
+	@SuppressWarnings("rawtypes")
+	public JComboBox box_day, box_month, box_year;
+	
+	//components for section2
+	private JLabel lbl_input_state, lbl_input_city, lbl_input_neighborhood, lbl_input_street;
+	private JLabel lbl_input_cp, lbl_input_ext_number, lbl_input_int_number;
+	private JLabel lbl_consult_cp; 
+	private JTextField txt_state, txt_city, txt_neighborhood, txt_street, txt_cp;
+	private JTextField txt_ext_number, txt_int_number;
+	
+	//components for section3
+	private JLabel lbl_input_email_address;
+	private JLabel lbl_input_main_phone_number, lbl_input_second_phone_number;
+	private JLabel lbl_add_additional_email, lbl_set_additional_email;
+	private JTextField txt_email_address, txt_main_phone_number, txt_second_phone_number;
+	
+	//components for section4
+	private JLabel lbl_input_password, lbl_input_confirm_password;
+	private JPasswordField password_field, confirm_password_field;
+	private JTextField txt_password_field, txt_confirm_password_field;
+	private JCheckBox cbx_password_visibility;
+	
+	//Font standard
+	private Font fontPlaceHolderStandard = new Font("Nirmala UI", Font.PLAIN, 16);
+	private Font fontTextFieldStandard = new Font("Nirmala UI", Font.PLAIN, 17);
+	
+	//Foreground standard
+	private Color foregroundPlaceHolderStantdard = Color.LIGHT_GRAY;
+	private Color foregroundTextStandard = new Color(255,255,255);
+	
+	//Color of background
+	private Color default_background_color = new Color(7,33,70);
+	
+	static ArrayList<Object> components_swing = new ArrayList<Object>();
+	private ArrayList<Object> placeholder = new ArrayList<Object>();
+		
+	/**
+	 * Launch the application.
+	 */
+	
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+					LaunchRegister frame = new LaunchRegister();
+					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public LaunchRegister() {
+		
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+				addItemsComboBox();
+				addPlaceHolderList();
+				initialEventsInSectionForm();
+			}
+		});
+		setIconImage(Toolkit.getDefaultToolkit().getImage(LaunchRegister.class.getResource("/main/resources/visual/icons/V2/bbva_logo/iconApp.png")));
+		setTitle("Registro BBVA");
+		setType(Type.POPUP);
+		setResizable(false);
+		setBounds(260, 100, 1020, 608);
+		Frame = new JPanel();
+		Frame.setBackground(new Color(7,33,70));
+		Frame.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(Frame);
+		Frame.setLayout(null);
+		
+		Container = new JPanel();
+		Container.setBounds(0,0,1004,567);
+		Container.setBackground(default_background_color);
+		Container.setLayout(null);
+		Frame.add(Container);
+		
+		content_logo = new JPanel();
+		content_logo.setBounds(0,50,420,516);
+		content_logo.setBackground(default_background_color);
+		content_logo.setLayout(null);
+		Container.add(content_logo);
+		
+		lbl_official_logo = new JLabel();
+		lbl_official_logo.setBounds(0,0,420,516);
+		lbl_official_logo.setIcon(icon.BBVA_OFFICIAL_LOGO_REGISTER_DEFAULT);
+		lbl_official_logo.setHorizontalAlignment(SwingConstants.RIGHT);
+		lbl_official_logo.setVerticalAlignment(SwingConstants.TOP);
+		content_logo.add(lbl_official_logo);
+		
+		container_progress = new JPanel();
+		container_progress.setBounds(0,0,1004,50);
+		container_progress.setBackground(default_background_color);
+		container_progress.setLayout(null);
+		Container.add(container_progress);
+		
+		content_progress = new JPanel();
+		content_progress.setBounds(250,0,500,50);
+		content_progress.setBackground(default_background_color);
+		content_progress.setLayout(null);
+		container_progress.add(content_progress);
+		
+		header = new JPanel();
+		header.setBounds(419,50,585,80);
+		header.setBackground(default_background_color);
+		header.setLayout(null);
+		Container.add(header);
+		
+		footer = new JPanel();
+		footer.setBounds(419,501,585,65);
+		footer.setBackground(default_background_color);
+		footer.setLayout(null);
+		Container.add(footer);
+		
+		lbl_title_header = new JLabel();
+		lbl_title_header.setBounds(0,0,585,45);
+		lbl_title_header.setText("Inicia tu registro en BBVA Digital");
+		lbl_title_header.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 30));
+		lbl_title_header.setForeground(new Color(0,167,179));
+		lbl_title_header.setHorizontalAlignment(SwingConstants.CENTER);
+		header.add(lbl_title_header);
+		
+		lbl_indications_form = new JLabel();
+		lbl_indications_form.setBounds(0,45,585,35);
+		lbl_indications_form.setFont(new Font("Yu Gothic UI", Font.BOLD, 21));
+		lbl_indications_form.setForeground(new Color(255,255,255));
+		lbl_indications_form.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_indications_form.setVerticalAlignment(SwingConstants.BOTTOM);
+		header.add(lbl_indications_form);
+		
+		/*JSeparator separator = new JSeparator();
+		separator.setForeground(new Color(255, 255, 255));
+		separator.setBounds(42, 78, 500, 1);
+		header.add(separator);*/
+		
+		//FOOTER
+		
+		lbl_have_account = new JLabel();
+		lbl_have_account.setBounds(110,0,268,65);
+		lbl_have_account.setText("¿Ya tienes una cuenta en BBVA Digital?");
+		lbl_have_account.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 16));
+		lbl_have_account.setForeground(new Color(255,255,255));
+		lbl_have_account.setHorizontalAlignment(SwingConstants.LEFT);
+		lbl_have_account.setVerticalAlignment(SwingConstants.CENTER);
+		footer.add(lbl_have_account);
+		
+		lbl_login_app = new JLabel();
+		lbl_login_app.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lbl_login_app.setForeground(new Color(0, 183, 196));
+				lbl_login_app.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+			public void mouseExited(MouseEvent e) {
+				lbl_login_app.setForeground(new Color(0,167,179));
+				lbl_login_app.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+			public void mouseClicked(MouseEvent e) {
+				dispose();
+				login.setVisible(true);
+			}
+		});
+		lbl_login_app.setBounds(388,21,98,22);
+		lbl_login_app.setText("Iniciar sesión");
+		lbl_login_app.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 16));
+		lbl_login_app.setForeground(new Color(0,167,179));
+		lbl_login_app.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_login_app.setVerticalAlignment(SwingConstants.CENTER);
+		footer.add(lbl_login_app);
+		
+		/*SECTIONS OF FORM*/
+		
+		container_form_section1 = new JPanel();
+		container_form_section1.setBounds(419,130,585,319);
+		container_form_section1.setBackground(default_background_color);
+		container_form_section1.setLayout(null);
+		container_form_section1.setVisible(false);
+		Container.add(container_form_section1);
+		
+		container_form_section2 = new JPanel();
+		container_form_section2.setBounds(419,130,585,319);
+		container_form_section2.setBackground(default_background_color);
+		container_form_section2.setLayout(null);
+		container_form_section2.setVisible(false);
+		Container.add(container_form_section2);
+		
+		container_form_section3 = new JPanel();
+		container_form_section3.setBounds(419,130,585,319);
+		container_form_section3.setBackground(default_background_color);
+		container_form_section3.setLayout(null);
+		container_form_section3.setVisible(false);
+		Container.add(container_form_section3);
+		
+		container_form_section4 = new JPanel();
+		container_form_section4.setBounds(419,130,585,319);
+		container_form_section4.setBackground(default_background_color);
+		container_form_section4.setLayout(null);
+		container_form_section4.setVisible(true);
+		Container.add(container_form_section4);
+		
+		lbl_input_name = new JLabel();
+		lbl_input_name.setBounds(10,31,100,40);
+		lbl_input_name.setText("Nombre *");
+		lbl_input_name.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 18));
+		lbl_input_name.setForeground(new Color(255,255,255));
+		lbl_input_name.setHorizontalAlignment(SwingConstants.LEFT);
+		lbl_input_name.setVerticalAlignment(SwingConstants.CENTER);
+		container_form_section1.add(lbl_input_name);
+		
+		lbl_input_lastnameP = new JLabel();
+		lbl_input_lastnameP.setBounds(10,113,146,40);
+		lbl_input_lastnameP.setText("Apellido paterno *");
+		lbl_input_lastnameP.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 18));
+		lbl_input_lastnameP.setForeground(new Color(255,255,255));
+		lbl_input_lastnameP.setHorizontalAlignment(SwingConstants.LEFT);
+		lbl_input_lastnameP.setVerticalAlignment(SwingConstants.CENTER);
+		container_form_section1.add(lbl_input_lastnameP);
+		
+		lbl_input_lastnameM = new JLabel();
+		lbl_input_lastnameM.setBounds(10,194,158,40);
+		lbl_input_lastnameM.setText("Apellido  materno *");
+		lbl_input_lastnameM.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 18));
+		lbl_input_lastnameM.setForeground(new Color(255,255,255));
+		lbl_input_lastnameM.setHorizontalAlignment(SwingConstants.LEFT);
+		lbl_input_lastnameM.setVerticalAlignment(SwingConstants.CENTER);
+		container_form_section1.add(lbl_input_lastnameM);
+		
+		txt_name = new JTextField();
+		txt_name.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				txt_name.setEditable(true);
+				txt_name.setForeground(foregroundTextStandard);
+				txt_name.setFont(fontTextFieldStandard);
+				
+				if(txt_name.getText().equals(getPlaceHolder().get(0).toString())) {
+					txt_name.setText("");
+				}else {
+					txt_name.setText(txt_name.getText()+"");
+				}
+			}
+		});
+		txt_name.setBounds(10,72,247,30);
+		txt_name.setFont(fontPlaceHolderStandard);
+		txt_name.setForeground(foregroundPlaceHolderStantdard);
+		txt_name.setBackground(new Color(255,255,255));
+		txt_name.setEditable(false);
+		txt_name.setOpaque(false);
+		container_form_section1.add(txt_name);
+		
+		txt_last_nameP = new JTextField();
+		txt_last_nameP.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				txt_last_nameP.setEditable(true);
+				txt_last_nameP.setForeground(foregroundTextStandard);
+				txt_last_nameP.setFont(fontTextFieldStandard);
+				
+				if(txt_last_nameP.getText().equals(getPlaceHolder().get(1).toString())) {
+					txt_last_nameP.setText("");
+				}else {
+					txt_last_nameP.setText(txt_last_nameP.getText()+"");
+				}
+			}
+		});
+		txt_last_nameP.setBounds(10,153,247,30);
+		txt_last_nameP.setFont(fontPlaceHolderStandard);
+		txt_last_nameP.setForeground(foregroundPlaceHolderStantdard);
+		txt_last_nameP.setBackground(new Color(255,255,255));
+		txt_last_nameP.setEditable(false);
+		txt_last_nameP.setOpaque(false);
+		container_form_section1.add(txt_last_nameP);
+		
+		txt_last_nameM = new JTextField();
+		txt_last_nameM.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				txt_last_nameM.setEditable(true);
+				txt_last_nameM.setForeground(foregroundTextStandard);
+				txt_last_nameM.setFont(fontTextFieldStandard);
+				
+				if(txt_last_nameM.getText().equals(getPlaceHolder().get(2).toString())) {
+					txt_last_nameM.setText("");
+				}else {
+					txt_last_nameM.setText(txt_last_nameM.getText()+"");
+				}
+			}
+		});
+		txt_last_nameM.setBounds(10,235,247,30);		
+		txt_last_nameM.setFont(fontPlaceHolderStandard);
+		txt_last_nameM.setForeground(foregroundPlaceHolderStantdard);
+		txt_last_nameM.setBackground(new Color(255,255,255));
+		txt_last_nameM.setEditable(false);
+		txt_last_nameM.setOpaque(false);
+		container_form_section1.add(txt_last_nameM);
+		
+		lbl_input_curp = new JLabel();
+		lbl_input_curp.setText("CURP *");
+		lbl_input_curp.setBounds(290,194,140,40);
+		lbl_input_curp.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 18));
+		lbl_input_curp.setForeground(new Color(255,255,255));
+		lbl_input_curp.setHorizontalAlignment(SwingConstants.LEFT);
+		lbl_input_curp.setVerticalAlignment(SwingConstants.CENTER);
+		container_form_section1.add(lbl_input_curp);
+		
+		lbl_consult_curp = new JLabel();
+		lbl_consult_curp.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lbl_consult_curp.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				lbl_consult_curp.setIcon(icon.icon_consult_external_web_site_entered);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lbl_consult_curp.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+				lbl_consult_curp.setIcon(icon.icon_consult_external_web_site_exited);
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lbl_consult_curp.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+				try {
+					consult_curp.openWebSite();
+				} catch (URISyntaxException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		lbl_consult_curp.setBounds(530,194,30,40);
+		lbl_consult_curp.setIcon(icon.icon_consult_external_web_site_exited);
+		lbl_consult_curp.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_consult_curp.setVerticalAlignment(SwingConstants.CENTER);
+		container_form_section1.add(lbl_consult_curp);
+		
+		txt_curp = new JTextField();
+		txt_curp.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				txt_curp.setEditable(true);
+				txt_curp.setForeground(foregroundTextStandard);
+				txt_curp.setFont(fontTextFieldStandard);
+				
+				if(txt_curp.getText().equals(getPlaceHolder().get(3).toString())) {
+					txt_curp.setText("");
+				}else {
+					txt_curp.setText(txt_curp.getText()+"");
+				}
+			}
+		});
+		txt_curp.setBounds(290,235,270,30);
+		txt_curp.setFont(fontPlaceHolderStandard);
+		txt_curp.setForeground(foregroundPlaceHolderStantdard);
+		txt_curp.setBackground(new Color(255,255,255));
+		txt_curp.setEditable(false);
+		txt_curp.setOpaque(false);
+		container_form_section1.add(txt_curp);
+		
+		lbl_input_dateborn = new JLabel();
+		lbl_input_dateborn.setBounds(290,31,171,40);
+		lbl_input_dateborn.setText("Fecha de nacimiento *");
+		lbl_input_dateborn.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 18));
+		lbl_input_dateborn.setForeground(new Color(255,255,255));
+		lbl_input_dateborn.setHorizontalAlignment(SwingConstants.LEFT);
+		lbl_input_dateborn.setVerticalAlignment(SwingConstants.CENTER);
+		container_form_section1.add(lbl_input_dateborn);
+		
+		box_day = new JComboBox();	
+		box_day.addItem(makeObj("Día"));
+		box_day.setName("box_day");
+		box_day.setFont(new Font("Leelawadee UI", Font.PLAIN, 15));
+		box_day.setBackground(new Color(255,255,255));
+		box_day.setBounds(290,72,70,30);
+		container_form_section1.add(box_day);
+
+		box_month = new JComboBox();	
+		box_month.addItem(makeObj("Mes"));
+		box_month.setName("box_month");
+		box_month.setBounds(370,72,110,30);
+		box_month.setFont(new Font("Leelawadee UI", Font.PLAIN, 15));
+		box_month.setBackground(new Color(255,255,255));
+		container_form_section1.add(box_month);
+
+	    box_year = new JComboBox();	
+		box_year.addItem(makeObj("Año"));
+		box_year.setBounds(490,72,70,30);
+		box_year.setName("box_year");
+		box_year.setFont(new Font("Leelawadee UI", Font.PLAIN, 15));
+		box_year.setBackground(new Color(255,255,255));
+		container_form_section1.add(box_year);
+		
+		/*
+		 * FINISH THE SECTION 1
+		 * AND START THE SECTION 2
+		 */
+		
+		lbl_input_state = new JLabel();
+		lbl_input_state.setBounds(10,31,100,40);
+		lbl_input_state.setText("Estado *");
+		lbl_input_state.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 18));
+		lbl_input_state.setForeground(new Color(255,255,255));
+		lbl_input_state.setHorizontalAlignment(SwingConstants.LEFT);
+		lbl_input_state.setVerticalAlignment(SwingConstants.CENTER);
+		container_form_section2.add(lbl_input_state);
+		
+		lbl_input_city = new JLabel();
+		lbl_input_city.setBounds(10,113,159,40);
+		lbl_input_city.setText("Ciudad / Municipio *");
+		lbl_input_city.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 18));
+		lbl_input_city.setForeground(new Color(255,255,255));
+		lbl_input_city.setHorizontalAlignment(SwingConstants.LEFT);
+		lbl_input_city.setVerticalAlignment(SwingConstants.CENTER);
+		container_form_section2.add(lbl_input_city);
+		
+		lbl_input_neighborhood = new JLabel();
+		lbl_input_neighborhood.setBounds(10,194,158,40);
+		lbl_input_neighborhood.setText("Colonia *");
+		lbl_input_neighborhood.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 18));
+		lbl_input_neighborhood.setForeground(new Color(255,255,255));
+		lbl_input_neighborhood.setHorizontalAlignment(SwingConstants.LEFT);
+		lbl_input_neighborhood.setVerticalAlignment(SwingConstants.CENTER);
+		container_form_section2.add(lbl_input_neighborhood);
+		
+		txt_state = new JTextField();
+		txt_state.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				txt_state.setEditable(true);
+				txt_state.setForeground(foregroundTextStandard);
+				txt_state.setFont(fontTextFieldStandard);
+				
+				if(txt_state.getText().equals(getPlaceHolder().get(4).toString())) {
+					txt_state.setText("");
+				}else {
+					txt_state.setText(txt_state.getText()+"");
+				}
+			}
+		});
+		txt_state.setBounds(10,72,255,30);
+		txt_state.setFont(fontPlaceHolderStandard);
+		txt_state.setForeground(foregroundPlaceHolderStantdard);
+		txt_state.setEditable(false);
+		txt_state.setOpaque(false);
+		txt_state.setBackground(new Color(255,255,255));
+		container_form_section2.add(txt_state);
+		
+		txt_city = new JTextField();
+		txt_city.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				txt_city.setEditable(true);
+				txt_city.setForeground(foregroundTextStandard);
+				txt_city.setFont(fontTextFieldStandard);
+				
+				if(txt_city.getText().equals(getPlaceHolder().get(5).toString())) {
+					txt_city.setText("");
+				}else {
+					txt_city.setText(txt_city.getText()+"");
+				}
+			}
+		});
+		txt_city.setBounds(10,153,255,30);
+		txt_city.setFont(fontPlaceHolderStandard);
+		txt_city.setForeground(foregroundPlaceHolderStantdard);
+		txt_city.setEditable(false);
+		txt_city.setOpaque(false);
+		txt_city.setBackground(new Color(255,255,255));
+		container_form_section2.add(txt_city);
+		
+		/*txt_colonia = new RoundedJTextField(1);
+		txt_colonia.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				txt_colonia.setEditable(true);
+				txt_colonia.setForeground(colorFont.PRIMARY_COLOR_FONT_TEXT_BLACK);
+				txt_colonia.setFont(fontTextFieldStandard);
+				
+				if(txt_colonia.getText().equals(getPlaceHolder().get(6).toString())) {
+					txt_colonia.setText("");
+				}else {
+					txt_colonia.setText(txt_colonia.getText()+"");
+				}
+			}
+		});
+		txt_colonia.setBounds(10,235,255,33);
+		txt_colonia.setFont(fontPlaceHolderStandard);
+		txt_colonia.setForeground(colorFont.PLACEHOLDER_COLOR_FONT_TEXT_GRAY);
+		txt_colonia.setEditable(false);
+		txt_colonia.setOpaque(false);
+		txt_colonia.setBackground(new Color(255,255,255));
+		container_form_section2.add(txt_colonia);*/
+		
+		lbl_input_street = new JLabel();
+		lbl_input_street.setBounds(290,31,100,40);
+		lbl_input_street.setText("Calle *");
+		lbl_input_street.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 18));
+		lbl_input_street.setForeground(new Color(255,255,255));
+		lbl_input_street.setHorizontalAlignment(SwingConstants.LEFT);
+		lbl_input_street.setVerticalAlignment(SwingConstants.CENTER);
+		container_form_section2.add(lbl_input_street);
+		
+		lbl_input_cp = new JLabel();
+		lbl_input_cp.setBounds(290,113,130,40);
+		lbl_input_cp.setText("Código postal *");
+		lbl_input_cp.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 18));
+		lbl_input_cp.setForeground(new Color(255,255,255));
+		lbl_input_cp.setHorizontalAlignment(SwingConstants.LEFT);
+		lbl_input_cp.setVerticalAlignment(SwingConstants.CENTER);
+		container_form_section2.add(lbl_input_cp);
+		
+		lbl_consult_cp = new JLabel();
+		lbl_consult_cp.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lbl_consult_cp.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				lbl_consult_cp.setIcon(icon.icon_consult_external_web_site_entered);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				lbl_consult_cp.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+				lbl_consult_cp.setIcon(icon.icon_consult_external_web_site_exited);
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lbl_consult_cp.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+				try {
+					consult_cp.openWebSite();
+				} catch (URISyntaxException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		lbl_consult_cp.setBounds(524,113,30,40);
+		lbl_consult_cp.setIcon(icon.icon_consult_external_web_site_exited);
+		lbl_consult_cp.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_consult_cp.setVerticalAlignment(SwingConstants.CENTER);
+		container_form_section2.add(lbl_consult_cp);
+		
+		txt_street = new JTextField();
+		txt_street.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				txt_street.setEditable(true);
+				txt_street.setForeground(foregroundTextStandard);
+				txt_street.setFont(fontTextFieldStandard);
+				
+				if(txt_street.getText().equals(getPlaceHolder().get(7).toString())) {
+					txt_street.setText("");
+				}else {
+					txt_street.setText(txt_street.getText()+"");
+				}
+			}
+		});
+		txt_street.setBounds(290,72,263,30);
+		txt_street.setFont(fontPlaceHolderStandard);
+		txt_street.setForeground(foregroundPlaceHolderStantdard);
+		txt_street.setEditable(false);
+		txt_street.setOpaque(false);
+		txt_street.setBackground(new Color(255,255,255));
+		container_form_section2.add(txt_street);
+		
+		txt_cp = new JTextField();
+		txt_cp.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				txt_cp.setEditable(true);
+				txt_cp.setForeground(foregroundTextStandard);
+				txt_cp.setFont(fontTextFieldStandard);
+				
+				if(txt_cp.getText().equals(getPlaceHolder().get(8).toString())) {
+					txt_cp.setText("");
+				}else {
+					txt_cp.setText(txt_cp.getText()+"");
+				}
+			}
+		});
+		txt_cp.setBounds(290,153,263,30);
+		txt_cp.setFont(fontPlaceHolderStandard);
+		txt_cp.setForeground(foregroundPlaceHolderStantdard);
+		txt_cp.setEditable(false);
+		txt_cp.setOpaque(false);
+		txt_cp.setBackground(new Color(255,255,255));
+		container_form_section2.add(txt_cp);
+		
+		lbl_input_ext_number = new JLabel();
+		lbl_input_ext_number.setBounds(290,194,102,40);
+		lbl_input_ext_number.setText("No. Exterior *");
+		lbl_input_ext_number.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 18));
+		lbl_input_ext_number.setForeground(new Color(255,255,255));
+		lbl_input_ext_number.setHorizontalAlignment(SwingConstants.LEFT);
+		lbl_input_ext_number.setVerticalAlignment(SwingConstants.CENTER);
+		container_form_section2.add(lbl_input_ext_number);
+		
+		lbl_input_int_number = new JLabel();
+		lbl_input_int_number.setBounds(426, 194, 87, 40);
+		lbl_input_int_number.setText("No. Interior");
+		lbl_input_int_number.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 18));
+		lbl_input_int_number.setForeground(new Color(255,255,255));
+		lbl_input_int_number.setHorizontalAlignment(SwingConstants.LEFT);
+		lbl_input_int_number.setVerticalAlignment(SwingConstants.CENTER);
+		container_form_section2.add(lbl_input_int_number);
+		
+		txt_ext_number = new JTextField();
+		txt_ext_number.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				txt_ext_number.setEditable(true);
+				txt_ext_number.setForeground(new Color(255,255,255));
+				txt_ext_number.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 17));
+				
+				if(txt_ext_number.getText().equals(getPlaceHolder().get(9).toString())) {
+					txt_ext_number.setText("");
+				}else {
+					txt_ext_number.setText(txt_ext_number.getText()+"");
+				}
+			}
+		});
+		txt_ext_number.setBounds(290,235,126,30);
+		txt_ext_number.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 13));
+		txt_ext_number.setEditable(false);
+		txt_ext_number.setOpaque(false);
+		txt_ext_number.setBackground(new Color(255,255,255));
+		txt_ext_number.setForeground(Color.LIGHT_GRAY);
+		container_form_section2.add(txt_ext_number);
+		
+		txt_int_number = new JTextField();
+		txt_int_number.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				txt_int_number.setEditable(true);
+				txt_int_number.setForeground(new Color(255,255,255));
+				txt_int_number.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 17));
+				
+				if(txt_int_number.getText().equals(getPlaceHolder().get(10).toString())) {
+					txt_int_number.setText("");
+				}else {
+					txt_int_number.setText(txt_int_number.getText()+"");
+				}
+			}
+		});
+		txt_int_number.setBounds(426,235,126,30);
+		txt_int_number.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 13));
+		txt_int_number.setEditable(false);
+		txt_int_number.setOpaque(false);
+		txt_int_number.setBackground(new Color(255,255,255));
+		txt_int_number.setForeground(Color.LIGHT_GRAY);
+		container_form_section2.add(txt_int_number);
+		
+		/*
+		 * FINISH THE SECTION 2
+		 * AND START THE SECTION 3
+		 */
+		
+		lbl_input_email_address = new JLabel();
+		lbl_input_email_address.setBounds(20,31,200,40);
+		lbl_input_email_address.setText("Correo electrónico *");
+		lbl_input_email_address.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 18));
+		lbl_input_email_address.setForeground(foregroundTextStandard);
+		lbl_input_email_address.setHorizontalAlignment(SwingConstants.LEFT);
+		lbl_input_email_address.setVerticalAlignment(SwingConstants.CENTER);
+		container_form_section3.add(lbl_input_email_address);
+		
+		lbl_add_additional_email = new JLabel();
+		lbl_add_additional_email.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				
+				lbl_add_additional_email.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				lbl_add_additional_email.setForeground(foregroundTextStandard);
+				
+				if(lbl_add_additional_email.getIcon().equals(icon.ADDITIONAL_EMAIL_EXITED)) {
+					lbl_add_additional_email.setIcon(icon.ADDITIONAL_EMAIL_ENTERED);
+				}else {
+					if(lbl_add_additional_email.getIcon().equals(icon.UPDATE_ADDITIONAL_EMAIL_EXITED)) {
+						lbl_add_additional_email.setIcon(icon.UPDATE_ADDITIONAL_EMAIL_ENTERED);
+					}
+				}
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				
+				lbl_add_additional_email.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+				lbl_add_additional_email.setForeground(new Color(208, 211, 212));
+				
+				if(lbl_add_additional_email.getIcon().equals(icon.ADDITIONAL_EMAIL_ENTERED)) {
+					lbl_add_additional_email.setIcon(icon.ADDITIONAL_EMAIL_EXITED);
+				}else {
+					if(lbl_add_additional_email.getIcon().equals(icon.UPDATE_ADDITIONAL_EMAIL_ENTERED)) {
+						lbl_add_additional_email.setIcon(icon.UPDATE_ADDITIONAL_EMAIL_EXITED);
+					}
+				}
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				if(additionalEmail.getAdditionalEmail() == null) additionalEmail.setVisible(true);
+				
+				additionalEmail.addWindowListener(new WindowAdapter() {
+					@Override
+					public void windowClosing(WindowEvent e) {
+						if(additionalEmail.getAdditionalEmail() != null) updateAdditionalEmail();
+					}
+					@Override
+					public void windowClosed(WindowEvent e) {
+						if(additionalEmail.getAdditionalEmail() != null) updateAdditionalEmail();
+					}
+				});
+			}
+		});
+		lbl_add_additional_email.setBounds(350,31,220,40);
+		lbl_add_additional_email.setIcon(icon.ADDITIONAL_EMAIL_EXITED);
+		lbl_add_additional_email.setText("Añadir email adicional");
+		lbl_add_additional_email.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 16));
+		lbl_add_additional_email.setForeground(new Color(208, 211, 212));
+		lbl_add_additional_email.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_add_additional_email.setVerticalAlignment(SwingConstants.CENTER);
+		container_form_section3.add(lbl_add_additional_email);
+		
+		lbl_set_additional_email = new JLabel();
+		lbl_set_additional_email.setBounds(20,71,250,40);
+		lbl_set_additional_email.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 16));
+		lbl_set_additional_email.setForeground(foregroundTextStandard);
+		lbl_set_additional_email.setVerticalAlignment(SwingConstants.CENTER);
+		lbl_set_additional_email.setHorizontalAlignment(SwingConstants.LEFT);
+		container_form_section3.add(lbl_set_additional_email);
+		
+		lbl_input_main_phone_number = new JLabel();
+		lbl_input_main_phone_number.setBounds(20,113,250,40);
+		lbl_input_main_phone_number.setText("Número teléfonico principal*");
+		lbl_input_main_phone_number.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 18));
+		lbl_input_main_phone_number.setForeground(foregroundTextStandard);
+		lbl_input_main_phone_number.setHorizontalAlignment(SwingConstants.LEFT);
+		lbl_input_main_phone_number.setVerticalAlignment(SwingConstants.CENTER);
+		container_form_section3.add(lbl_input_main_phone_number);
+		
+		lbl_input_second_phone_number = new JLabel();
+		lbl_input_second_phone_number.setBounds(20,194,250,40);
+		lbl_input_second_phone_number.setText("Número teléfonico secundario");
+		lbl_input_second_phone_number.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 18));
+		lbl_input_second_phone_number.setForeground(foregroundTextStandard);
+		lbl_input_second_phone_number.setHorizontalAlignment(SwingConstants.LEFT);
+		lbl_input_second_phone_number.setVerticalAlignment(SwingConstants.CENTER);
+		container_form_section3.add(lbl_input_second_phone_number);
+		
+		txt_email_address = new JTextField();
+		txt_email_address.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				txt_email_address.setEditable(true);
+				txt_email_address.setForeground(foregroundTextStandard);
+				txt_email_address.setFont(fontTextFieldStandard);
+				
+				if(txt_email_address.getText().equals(getPlaceHolder().get(11).toString())) {
+					txt_email_address.setText("");
+				}else {
+					txt_email_address.setText(txt_email_address.getText()+"");
+				}
+			}
+		});
+		txt_email_address.setBounds(20,72,320,30);
+		txt_email_address.setFont(fontPlaceHolderStandard);
+		txt_email_address.setForeground(foregroundPlaceHolderStantdard);
+		txt_email_address.setBackground(new Color(255,255,255));
+		txt_email_address.setEditable(false);
+		txt_email_address.setOpaque(false);
+		container_form_section3.add(txt_email_address);
+		
+		txt_main_phone_number = new JTextField();
+		txt_main_phone_number.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				txt_main_phone_number.setEditable(true);
+				txt_main_phone_number.setForeground(foregroundTextStandard);
+				txt_main_phone_number.setFont(fontTextFieldStandard);
+				
+				if(txt_main_phone_number.getText().equals(getPlaceHolder().get(12).toString())) {
+					txt_main_phone_number.setText("");
+				}else {
+					txt_main_phone_number.setText(txt_main_phone_number.getText()+"");
+				}
+			}
+		});
+		txt_main_phone_number.setBounds(20,153,320,30);
+		txt_main_phone_number.setFont(fontPlaceHolderStandard);
+		txt_main_phone_number.setForeground(foregroundPlaceHolderStantdard);
+		txt_main_phone_number.setBackground(new Color(255,255,255));
+		txt_main_phone_number.setEditable(false);
+		txt_main_phone_number.setOpaque(false);
+		container_form_section3.add(txt_main_phone_number);
+		
+		txt_second_phone_number = new JTextField();
+		txt_second_phone_number.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				txt_second_phone_number.setEditable(true);
+				txt_second_phone_number.setForeground(foregroundTextStandard);
+				txt_second_phone_number.setFont(fontTextFieldStandard);
+				
+				if(txt_second_phone_number.getText().equals(getPlaceHolder().get(13).toString())) {
+					txt_second_phone_number.setText("");
+				}else {
+					txt_second_phone_number.setText(txt_second_phone_number.getText()+"");
+				}
+			}
+		});
+		txt_second_phone_number.setBounds(20,235,320,30);
+		txt_second_phone_number.setFont(fontPlaceHolderStandard);
+		txt_second_phone_number.setForeground(foregroundPlaceHolderStantdard);
+		txt_second_phone_number.setBackground(new Color(255,255,255));
+		txt_second_phone_number.setEditable(false);
+		txt_second_phone_number.setOpaque(false);
+		container_form_section3.add(txt_second_phone_number);
+		
+		/*
+		 * FINISH THE SECTION 3
+		 * AND START THE SECTION 4
+		 */
+		
+		lbl_input_password = new JLabel();
+		lbl_input_password.setBounds(20,40,200,40);
+		lbl_input_password.setText("Contraseña");
+		lbl_input_password.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 18));
+		lbl_input_password.setForeground(foregroundTextStandard);
+		lbl_input_password.setHorizontalAlignment(SwingConstants.LEFT);
+		lbl_input_password.setVerticalAlignment(SwingConstants.CENTER);
+		container_form_section4.add(lbl_input_password);
+		
+		lbl_input_confirm_password = new JLabel();
+		lbl_input_confirm_password.setBounds(20,122,200,40);
+		lbl_input_confirm_password.setText("Confirmar contraseña");
+		lbl_input_confirm_password.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 18));
+		lbl_input_confirm_password.setForeground(foregroundTextStandard);
+		lbl_input_confirm_password.setHorizontalAlignment(SwingConstants.LEFT);
+		lbl_input_confirm_password.setVerticalAlignment(SwingConstants.CENTER);
+		container_form_section4.add(lbl_input_confirm_password);
+		
+		password_field = new JPasswordField();
+		password_field.setBounds(20,81,247,30);
+		password_field.setFont(fontPlaceHolderStandard);
+		password_field.setForeground(foregroundPlaceHolderStantdard);
+		password_field.setBackground(new Color(255,255,255));
+		password_field.setEditable(false);
+		password_field.setOpaque(false);
+		container_form_section4.add(password_field);
+		
+		confirm_password_field = new JPasswordField();
+		confirm_password_field.setBounds(20,163,247,30);
+		confirm_password_field.setFont(fontPlaceHolderStandard);
+		confirm_password_field.setForeground(foregroundPlaceHolderStantdard);
+		confirm_password_field.setBackground(new Color(255,255,255));
+		confirm_password_field.setEditable(false);
+		confirm_password_field.setOpaque(false);
+		container_form_section4.add(confirm_password_field);
+		
+		cbx_password_visibility = new JCheckBox();
+		cbx_password_visibility.setBounds(20,213,210,40);
+		cbx_password_visibility.setText("Mostrar contraseña");
+		cbx_password_visibility.setFont(new Font("Yu Gothic UI Semilight", Font.PLAIN, 16));
+		cbx_password_visibility.setBackground(default_background_color);
+		cbx_password_visibility.setForeground(foregroundTextStandard);
+		cbx_password_visibility.setBorderPainted(false);
+		cbx_password_visibility.setSelected(false);
+		container_form_section4.add(cbx_password_visibility);
+		
+		/*
+		 * FINISH THE SECTION 4
+		 */
+		
+		btn_move_right = new RoundedPanel();
+		btn_move_right.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btn_move_right.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				lbl_text_right.setForeground(new Color(255, 255, 255));
+				lbl_icon_move_right.setIcon(icon.arrow_right_entered);
+			}
+			public void mouseExited(MouseEvent e) {
+				btn_move_right.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+				lbl_text_right.setForeground(new Color(229, 231, 233));
+				lbl_icon_move_right.setIcon(icon.arrow_right_exited);
+			}
+			public void mouseClicked(MouseEvent e) {
+
+				setMoveToRight(true);
+				setMoveToLeft(false);
+				
+				switch(getSectionForm()) {
+				case 1:
+					if(isInformationEmptyOrNull(getSectionForm())) {
+						JOptionPane.showMessageDialog(null,dialog.getBodyDialog(),dialog.getTitleDialog(),JOptionPane.WARNING_MESSAGE);
+					}else {
+						changedSectionForm();
+					}
+					break;
+				case 2:
+					if(isInformationEmptyOrNull(getSectionForm())) {
+						JOptionPane.showMessageDialog(null,dialog.getBodyDialog(),dialog.getTitleDialog(),JOptionPane.WARNING_MESSAGE);
+					}else {
+						changedSectionForm();
+					}
+					break;
+				case 3:
+					if(isInformationEmptyOrNull(getSectionForm())) {
+						JOptionPane.showMessageDialog(null,dialog.getBodyDialog(),dialog.getTitleDialog(),JOptionPane.WARNING_MESSAGE);
+					}else {
+						changedSectionForm();
+					}
+				}
+			}
+		});
+		btn_move_right.setBounds(697, 448, 120, 40);
+		btn_move_right.setBackground(new Color(7,33,70));
+		//btn_move_right.setBackground(new Color(52, 73, 94));
+		((RoundedPanel) btn_move_right ).setCornerRadius(10);
+		btn_move_right.setOpaque(false);
+		btn_move_right.setLayout(null);
+		Container.add(btn_move_right);
+		
+		btn_move_left = new RoundedPanel();
+		btn_move_left.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				if(getSectionForm()==1) {
+					btn_move_left.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+				}else {
+					btn_move_left.setCursor(new Cursor(Cursor.HAND_CURSOR));
+					lbl_text_left.setForeground(new Color(255,255,255));
+					lbl_text_left.setIcon(icon.arrow_left_entered);
+				}
+			}
+			public void mouseExited(MouseEvent e) {
+				if(getSectionForm()==1) {
+					btn_move_left.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+				}else{
+					btn_move_left.setCursor(new Cursor(Cursor.HAND_CURSOR));
+					lbl_text_left.setForeground(new Color(229, 231, 233));
+					lbl_text_left.setIcon(icon.arrow_left_exited);
+				}
+			}
+			public void mouseClicked(MouseEvent e) {
+				
+				setMoveToRight(false);
+				setMoveToLeft(true);
+				
+				changedSectionForm();
+			}
+		});
+		btn_move_left.setLayout(null);
+		btn_move_left.setOpaque(false);
+		((RoundedPanel) btn_move_left ).setCornerRadius(10);
+		btn_move_left.setBackground(new Color(7,33,70));
+		//btn_move_left.setBackground(new Color(52, 73, 94));
+		btn_move_left.setBounds(568, 448, 120, 40);
+		Container.add(btn_move_left);
+		
+		lbl_text_right = new JLabel();
+		lbl_text_right.setBounds(0,0,105,40);
+		lbl_text_right.setText("Siguiente");
+		lbl_text_right.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 17));
+		//lbl_text_right.setForeground(new Color(190,190,190));
+		lbl_text_right.setForeground(new Color(229, 231, 233));
+		lbl_text_right.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_text_right.setVerticalAlignment(SwingConstants.CENTER);
+		btn_move_right.add(lbl_text_right);
+		
+		lbl_icon_move_right = new JLabel();
+		lbl_icon_move_right.setBounds(90,5,20,35);
+		lbl_icon_move_right.setText("");
+		lbl_icon_move_right.setIcon(icon.arrow_right_exited);
+		lbl_icon_move_right.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_icon_move_right.setVerticalAlignment(SwingConstants.CENTER);
+		btn_move_right.add(lbl_icon_move_right);
+		
+		lbl_text_left = new JLabel();
+		lbl_text_left.setBounds(0, 0, 120, 40);
+		lbl_text_left.setIcon(icon.arrow_left_exited);
+		lbl_text_left.setText("Regresar");
+		lbl_text_left.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 17));
+		//lbl_text_left.setForeground(new Color(190,190,190));
+		//lbl_text_left.setForeground(new Color(255,255,255));
+		lbl_text_left.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_text_left.setVerticalAlignment(SwingConstants.CENTER);
+		btn_move_left.add(lbl_text_left);
+		
+	}
+	
+	private void initialEventsInSectionForm() {
+		//Add text to form's title
+		dialog.setTitle(dialog.TITLE_FORM_SECTION4);
+		lbl_indications_form.setText(dialog.getTitleDialog());
+		
+		//Set inactive button 
+		lbl_text_left.setForeground(new Color(166, 172, 175));
+		lbl_text_left.setIcon(icon.arrow_left_inactive);
+		
+		//set form's section
+		setSectionForm(1);
+	}
+	
+	private void setSectionForm(int sec_form) {
+		this.sec_form = sec_form;
+	}
+	
+	private int getSectionForm() {
+		return sec_form;
+	}
+	
+	private void setMoveToRight(boolean move_to_right) {
+		this.move_to_right = move_to_right;
+	}
+	
+	private boolean getMoveToRight(){
+		return move_to_right;
+	}
+	
+	private void setMoveToLeft(boolean move_to_left) {
+		this.move_to_left = move_to_left;
+	}
+	
+	private boolean getMoveToLeft(){
+		return move_to_left;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private void addItemsComboBox() {
+		int actual_year = Calendar.getInstance().get(Calendar.YEAR);
+		String month[] = {"Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio",
+				"Agosto","Septiembre","Octubre","Noviembre","Diciembre"};
+		
+		for (int i = 1; i <= 31; i++) {
+			box_day.addItem(makeObj(String.valueOf(i)));
+		}
+		for (int j = 0; j <= month.length-1; j++){
+			box_month.addItem(makeObj(String.valueOf(month[j])));
+		}
+		for (int k = 1960; k <= actual_year-18; k++){
+			box_year.addItem(makeObj(String.valueOf(k)));
+		}
+		
+		//Initial values
+		box_day.setSelectedIndex(0);
+		box_month.setSelectedIndex(0);
+		box_year.setSelectedIndex(0);
+	}
+	
+	private Object makeObj(final String item) {
+		return new Object() {
+			public String toString() {
+				return item;
+			}
+		};
+	}
+	
+	private void addPlaceHolderList() {
+		String items[] = {
+				//for section1
+				"Escriba su nombre(s)",
+				"Escriba su apellido paterno",
+				"Escriba su apellido materno",
+				"Escriba su CURP",
+				//for section2
+				"Estado de residencia",
+				"Ciudad ó municipio de residencia",
+				"Nombre de la colonia",
+				"Nombre de la calle",
+				"CP de residencia",
+				"No. Del domicilio",
+				"No. Del domicilio",
+				//for section3
+				"Dirección de email",
+				"Número teléfonico",
+				"Número teléfonico"};
+		
+		for(int i = 0; i < items.length; i++) {
+			this.placeholder.add(i, items[i]);
+		}
+		//for(int j = 4; j < 11 ; j++) { System.out.print(placeholder.get(j)); }
+		setPlaceHolderInTextField();
+	}
+	
+	private ArrayList<Object> getPlaceHolder() {
+		return placeholder;
+	}
+	
+	private void setPlaceHolderInTextField() {
+		//section1
+		txt_name.setText(placeholder.get(0).toString());
+		txt_last_nameP.setText(placeholder.get(1).toString());
+		txt_last_nameM.setText(placeholder.get(2).toString());
+		txt_curp.setText(placeholder.get(3).toString());
+		//section2
+		txt_state.setText(placeholder.get(4).toString());
+		txt_city.setText(placeholder.get(5).toString());
+		txt_neighborhood.setText(placeholder.get(6).toString());
+		txt_street.setText(placeholder.get(7).toString());
+		txt_cp.setText(placeholder.get(8).toString());
+		txt_ext_number.setText(placeholder.get(9).toString());
+		txt_int_number.setText(placeholder.get(10).toString());
+		//section3
+		txt_email_address.setText(placeholder.get(11).toString());
+		txt_main_phone_number.setText(placeholder.get(12).toString());
+		txt_second_phone_number.setText(placeholder.get(13).toString());
+	}
+	
+	private void changedSectionForm() {
+		if(getMoveToRight()) {
+			if(container_form_section1.isVisible()) {
+				container_form_section1.setVisible(false);
+				container_form_section2.setVisible(true);
+				dialog.setTitle(dialog.TITLE_FORM_SECTION2);
+				lbl_indications_form.setText(dialog.getTitleDialog());
+				setDirectionButtons();
+				setSectionForm(2);
+			}else {
+				if(container_form_section2.isVisible()) {
+					container_form_section2.setVisible(false);
+					container_form_section3.setVisible(true);
+					dialog.setTitle(dialog.TITLE_FORM_SECTION3);
+					lbl_indications_form.setText(dialog.getTitleDialog());
+					setDirectionButtons();
+					setSectionForm(3);
+				}else {
+					if(container_form_section3.isVisible()) {
+						container_form_section3.setVisible(false);
+						container_form_section4.setVisible(true);
+						dialog.setTitle(dialog.TITLE_FORM_SECTION4);
+						lbl_indications_form.setText(dialog.getTitleDialog());
+						setDirectionButtons();
+						setSectionForm(4);
+					}
+				}
+			}
+			
+		}else {
+			
+			if(getMoveToLeft()) {
+				if(container_form_section4.isVisible()) {
+					container_form_section4.setVisible(false);
+					container_form_section3.setVisible(true);
+					dialog.setTitle(dialog.TITLE_FORM_SECTION3);
+					lbl_indications_form.setText(dialog.getTitleDialog());
+					setDirectionButtons();
+					setSectionForm(2);
+					if(container_form_section3.isVisible()) {
+						container_form_section3.setVisible(false);
+						container_form_section2.setVisible(true);
+						dialog.setTitle(dialog.TITLE_FORM_SECTION2);
+						lbl_indications_form.setText(dialog.getTitleDialog());
+						setDirectionButtons();
+						setSectionForm(2);
+					}else {
+						if(container_form_section2.isVisible()) {
+							container_form_section2.setVisible(false);
+							container_form_section1.setVisible(true);
+							dialog.setTitle(dialog.TITLE_FORM_SECTION1);
+							lbl_indications_form.setText(dialog.getTitleDialog());
+							setDirectionButtons();
+							setSectionForm(1);
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	private boolean isInformationEmptyOrNull(int section) {
+		ArrayList<Object> JSwingComponents = new ArrayList<Object>();
+		//for section1
+		JSwingComponents.add(txt_name.getText().toString());
+		JSwingComponents.add(txt_last_nameP.getText().toString());
+		JSwingComponents.add(txt_last_nameM.getText().toString());
+		JSwingComponents.add(txt_curp.getText().toString());
+		//for section2
+		JSwingComponents.add(txt_state.getText().toString());
+		JSwingComponents.add(txt_city.getText().toString());
+		JSwingComponents.add(txt_neighborhood.getText().toString());
+		JSwingComponents.add(txt_street.getText().toString());
+		JSwingComponents.add(txt_cp.getText().toString());
+		JSwingComponents.add(txt_ext_number.getText().toString());
+		JSwingComponents.add(txt_int_number.getText().toString());
+		//for section3
+		JSwingComponents.add(txt_email_address.getText().toString());
+		JSwingComponents.add(txt_main_phone_number.getText().toString());
+		JSwingComponents.add(txt_second_phone_number.getText().toString());
+		
+		switch(section) {
+		case 1:
+			for(int i = 0; i < 4; i++) {
+				if(!((JSwingComponents.get(i).equals(getPlaceHolder().get(i))) || (JSwingComponents.get(i).equals("")) || isBornDateCheckBoxEmpty())) {
+					return false;
+				}
+			}
+			break;
+		case 2:
+			for(int i = 4; i < 11; i++) {
+				if(!((JSwingComponents.get(i).equals(placeholder.get(i))) || (JSwingComponents.get(i).equals("")))) {
+					return false;
+				}
+			}
+			break;
+		case 3:
+			for(int i = 11; i < 14; i++) {
+				if(!((JSwingComponents.get(i).equals(placeholder.get(i))) || (JSwingComponents.get(i).equals("")))) {
+					return false;
+				}
+			}
+			break;
+		default: System.out.print("Internal system error");
+		}
+		
+		dialog.setTitle(dialog.TITLE_ERROR_IN_USER_REGISTER_FORM);
+		dialog.setDialog(dialog.DIALOG_ERROR_IN_USER_REGISTER_FORM);
+		return true;
+	}
+	
+	private boolean isBornDateCheckBoxEmpty() {
+		if(box_day.getSelectedIndex() == 0
+				|| box_month.getSelectedIndex() == 0 
+				|| box_year.getSelectedIndex() == 0) {
+			return true;
+		}
+		return false;
+	}
+	
+	private void setDirectionButtons() {
+		if(!(container_form_section1.isVisible())) {
+			//Set active button
+			lbl_text_left.setForeground(foregroundTextStandard);
+			lbl_text_left.setIcon(icon.arrow_left_exited);
+		}else {
+			//Set inactive button 
+			lbl_text_left.setForeground(new Color(166, 172, 175));
+			lbl_text_left.setIcon(icon.arrow_left_inactive);
+		}
+	}
+	
+	private void updateAdditionalEmail() {
+		lbl_add_additional_email.setIcon(icon.UPDATE_ADDITIONAL_EMAIL_EXITED);
+		lbl_add_additional_email.setText("Actualizar email adicional");
+		
+		lbl_add_additional_email.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				lbl_input_email_address.setBounds(20,0,200,40);
+				txt_email_address.setBounds(20,41,320,30);
+				lbl_set_additional_email.setText(additionalEmail.getAdditionalEmail());
+			}
+		});
+	}
+}

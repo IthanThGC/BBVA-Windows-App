@@ -1,0 +1,219 @@
+package main.resources.control.manager.clientControl;
+
+import java.util.ArrayList;
+
+import main.java.com.bbva_digital_app.register.client.LaunchRegister;
+
+public class ControllerUniversalForm {
+	
+	private int size = 0;
+	private int calls = 0;
+	private int n = 1;
+	private final int lenght = 10;
+	private LaunchRegister register;
+
+	//private LaunchRegister components_register;
+	private LaunchRegister components_register;
+	//private Register_Application control_date_age = new Register_Application();
+	
+	private int num_object = 0;
+	private int num_section_form = 0;
+	
+	private ArrayList<Object> boxes = new ArrayList<Object>();
+	private ArrayList<Object> items = new ArrayList<Object>();
+	private ArrayList<Object> new_elements = new ArrayList<Object>();
+	private ArrayList<Object> extract = new ArrayList<Object>();
+		
+	private ArrayList<Object> objects_sec1 = new ArrayList<Object>();
+	private ArrayList<Object> objects_sec2 = new ArrayList<Object>();
+	private ArrayList<Object> objects_sec3 = new ArrayList<Object>();
+	private ArrayList<Object> objects_sec4 = new ArrayList<Object>();
+	
+	static ArrayList<Object> placeholder_sec1 = new ArrayList<Object>();
+	static ArrayList<Object> placeholder_sec2 = new ArrayList<Object>();
+	static ArrayList<Object> placeholder_sec3 = new ArrayList<Object>();
+	static ArrayList<Object> placeholder_sec4 = new ArrayList<Object>();
+	
+	public ControllerUniversalForm(String id) {
+		setPlaceHolder();
+		setListItems();
+		//setListOfNewElements();
+	}
+	
+	public ControllerUniversalForm() {
+		//empty
+	}
+	
+	public void setPlaceHolder() {
+		//number text field: 0-3 | Layer section: 1
+		placeholder_sec1.add("Escriba su nombre(s)");
+		placeholder_sec1.add("Escriba su apellido paterno");
+		placeholder_sec1.add("Escriba su apellido materno");
+		placeholder_sec1.add("Escriba su CURP");
+		//number text field: 0-4 | Layer section: 2
+		placeholder_sec2.add("Escribe el nombre del estado");
+		placeholder_sec2.add("Escribe el nombre del municipio");
+		placeholder_sec2.add("Nombre de la Colonia");
+		placeholder_sec2.add("Nombre de la calle");
+		//number text field: 0-2 | Layer section: 3
+		placeholder_sec3.add("Escribe tu correo electrónico");
+		placeholder_sec3.add("Ingresa tu número telefónico (principal)");
+		placeholder_sec3.add("Ingresa algún número telefónico (secundario)");
+		//number text field: 0-1 | Layer section: 4
+		placeholder_sec4.add("Nombre de la escuela/universidad");
+		placeholder_sec4.add("Nombre de la empresa");
+	}
+	
+	/*public Object getComponentsSwing() {
+		components_register = new LaunchRegister();    
+		ArrayList<Object> components_swing = new ArrayList<Object>();
+		components_swing.add(components_register.txt_name);
+		components_swing.add(components_register.txt_last_nameP);
+		components_swing.add(components_register.txt_last_nameM);
+		components_swing.add(components_register.txt_curp);
+		
+		return components_swing;
+	}*/
+	
+	public void setListOfNewElements() {
+		new_elements.add(lenght);
+	}
+	
+	public void setInitialElementsSwing() {	
+		/*objects_sec1.add(components_register.txt_name.getText());
+		objects_sec1.add(components_register.txt_last_nameP.getText());
+		objects_sec1.add(components_register.txt_last_nameM.getText());
+		objects_sec1.add(components_register.txt_curp.getText());*/
+		for(int a = 0; a < 4; a++) {
+			objects_sec1.add(placeholder_sec1.get(a));
+		}
+	}
+	
+	public void setNewElementInList(int num_section, ArrayList<Object> new_value) {
+		switch(num_section) {
+		case 1:
+			for(int i = 0; i < 4; i++) {
+				new_elements.add(new_value.get(i));
+			}
+			break;
+		default:
+			System.out.print("puto");
+		}
+	}
+	
+	public ArrayList<Object> getNewElementInList() {
+		return new_elements;
+	}
+	
+	/*public void setNewElementInList(int num_section_form, int num_object) {
+		components_register = new LaunchRegister();
+		ArrayList<Object> new_element_in_list = new ArrayList<Object>();
+		switch(num_section_form) {
+		case 1:
+			objects_sec1.remove(num_object);
+			objects_sec1.add(components_register.new_element_in_list.getText());
+		}
+	}*/
+	
+	public void setElementPlaceHolder(int num_section_form, int num_object) {
+		this.num_section_form = num_section_form;
+		this.num_object = num_object;
+	}
+
+	public int getLayerSection() {
+		return num_section_form;
+	}
+	
+	public int getTextField() {
+		return num_object;
+	}
+	
+	public Object getPlaceHolder(int num_section_form, int num_object) {
+		Object placeholder = new Object();
+		
+		switch(num_section_form) {
+		case 1: placeholder = placeholder_sec1.get(num_object); break;
+		case 2: placeholder = placeholder_sec2.get(num_object); break;
+		case 3: placeholder = placeholder_sec3.get(num_object); break;
+		case 4: placeholder = placeholder_sec4.get(num_object); break;
+		default: System.out.print("error");
+		}
+		
+		return placeholder;
+	}
+	
+	public void setCalls(int calls) {
+		this.calls++;
+	}
+	
+	public int getCalls() {
+		return calls;
+	}
+	
+	public void setListBoxes() {
+		register = new LaunchRegister();
+		boxes.add(register.box_day.getSelectedItem());
+		boxes.add(register.box_month.getSelectedItem());
+		boxes.add(register.box_year.getSelectedItem());
+		size = boxes.size();
+	}
+	
+	public void setListItems() {
+		items.add("Día");
+		items.add("Mes");
+		items.add("Año");
+	}
+	
+	public ArrayList<Object> getListItems(){
+		return items;
+	}
+	
+	public ArrayList<Object> getListBoxes() {
+		return boxes;
+	}
+	
+	public boolean isEmptyBoxes() {
+		int corrections = 0;
+		for(int i = 0; i < size; i++) {
+			if(String.valueOf(boxes.get(i).equals(items.get(i))) != null) {
+				corrections++;
+			}
+			System.out.print(boxes.get(i)+"\n"+items.get(i));
+		}
+		if(corrections != 0) return true;
+		return false;
+	}
+	
+	public boolean isEmptyOrPlaceHolderActive(int section, int calls) {
+		//corrections = 0: there aren't empty text fields
+		//register = new LaunchRegister().setTextComponentsList(section, n++);
+		int corrections = 0;	
+		
+		switch(section) {
+		case 1:
+			
+			break;
+		/*case 2:
+			for(int b = 0; b < objects_sec1.size(); b++) {
+				if(objects_sec1.get(b).equals("")) corrections++;
+			}
+			break;
+		case 3:
+			for(int a = 0; a < objects_sec1.size(); a++) {
+				if(objects_sec1.get(a).equals("")) corrections++;
+			}
+			break;
+		case 4:
+			for(int a = 0; a < objects_sec1.size(); a++) {
+				if(objects_sec1.get(a).equals("")) corrections++;
+			}
+			break;*/
+		default:
+			System.out.print("puto");
+		}
+	
+		if(corrections != 0) return true;
+		
+		return false;
+	}
+}

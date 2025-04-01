@@ -1,0 +1,269 @@
+package main.java.com.bbva_digital_app.advertising;
+
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
+import java.awt.Toolkit;
+import javax.swing.JPopupMenu;
+import java.awt.Component;
+
+import main.resources.visual.manager.classes.IconImageManager;
+import main.resources.visual.swingcomponents.RoundedPanel;
+
+import main.java.com.bbva_digital_app.register.client.LaunchRegister1;
+
+public class BenefitsApplication extends JDialog {
+		
+	private static final long serialVersionUID = -4998760357590142480L;
+	
+	private final LaunchRegister1 registerClient = new LaunchRegister1();
+	private final LaunchBenefitsApplication benefits = new LaunchBenefitsApplication();
+	
+	//private final Administrator icon = new Administrator();
+	private IconImageManager icon = new IconImageManager();
+	
+	private JPanel container_frame;
+	
+	private JPanel container_presentation_benefits;
+	private JPanel content_right_position;
+	private JPanel content_bbva_benefits_logo;
+	private JPanel content_section;
+	
+	private JLabel lbl_logo_company;
+	private JLabel lbl_title_header;
+	private JLabel lbl_message1_header,lbl_message2_header;
+	
+	private JPanel btn_learn_more;
+	private JPanel btn_register;
+	private JLabel lbl_txt_btn_learn_more;
+	private JLabel lbl_txt_btn_register;
+	private JLabel lbl_icon_read_more;
+	private JLabel lbl_icon_register;
+	
+	//Style color
+	private Color backgroundColorSectionLeft = new Color(7,33,70);
+	//private Color backgroundColorSectionRight = new Color(255,255,255);
+	private Color backgroundColorButtonsExited = new Color(41, 128, 185);
+	private Color backgroundColorButtonsEntered = new Color(55, 144, 202);
+	
+	//Size's
+	//private int contentLogo_size[] = {5,5,369,462};
+	
+	/**
+	 * Launch the application.
+	 */
+	
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					BenefitsApplication dialog = new BenefitsApplication();
+					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+					dialog.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the dialog.
+	 */
+	public BenefitsApplication() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(BenefitsApplication.class.getResource("/main/resources/visual/icons/V2/bbva_logo/iconApp.png")));
+		setTitle("Beneficios BBVA-Digital");
+		setType(Type.POPUP);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setLocation(getX()+860/3,getY()+100);
+		setSize(869, 511);
+		getContentPane().setBackground(backgroundColorSectionLeft);
+		getContentPane().setLayout(null);
+		
+		container_frame = new JPanel();
+		container_frame.setBounds(0,0,853,472);
+		container_frame.setBackground(backgroundColorSectionLeft);
+		container_frame.setLayout(null);
+		getContentPane().add(container_frame);
+		
+		container_presentation_benefits = new JPanel();
+		container_presentation_benefits.setBounds(0,0,410,472);
+		container_presentation_benefits.setBackground(backgroundColorSectionLeft);
+		container_presentation_benefits.setLayout(null);
+		container_frame.add(container_presentation_benefits);
+		
+		content_right_position = new JPanel();
+		content_right_position.setBounds(419,0,433,472);
+		content_right_position.setBackground(backgroundColorSectionLeft);
+		content_right_position.setLayout(null);
+		container_frame.add(content_right_position);
+		
+		content_bbva_benefits_logo = new JPanel();
+		content_bbva_benefits_logo.setBounds(0,0,410,472);
+		content_bbva_benefits_logo.setBackground(backgroundColorSectionLeft);
+		content_bbva_benefits_logo.setLayout(null);
+		container_presentation_benefits.add(content_bbva_benefits_logo);
+		
+		content_section = new JPanel();
+		content_section.setBounds(0,5,433,462);
+		content_section.setBackground(backgroundColorSectionLeft);
+		content_section.setLayout(null);
+		content_right_position.add(content_section);
+		
+		lbl_logo_company = new JLabel();
+		lbl_logo_company.setBounds(0,0,420,472);
+		lbl_logo_company.setText(null);
+		lbl_logo_company.setHorizontalAlignment(SwingConstants.LEFT);
+		lbl_logo_company.setVerticalAlignment(SwingConstants.CENTER);
+		lbl_logo_company.setIcon(icon.BENEFITS_BBVA_LOGO_OFFICIAL);
+		content_bbva_benefits_logo.add(lbl_logo_company);
+		
+		lbl_title_header = new JLabel();
+		lbl_title_header.setBounds(-12,70,445,50);
+		lbl_title_header.setText("Antes de crear tu cuenta en BBVA Digital");
+		lbl_title_header.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 23));
+		lbl_title_header.setForeground(new Color(255,255,255));
+		lbl_title_header.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_title_header.setVerticalAlignment(SwingConstants.CENTER);
+		content_section.add(lbl_title_header);
+		
+		lbl_message1_header = new JLabel();
+		lbl_message1_header.setBounds(0,131,433,41);
+		lbl_message1_header.setText("Nos gustaría contarte algunos de los beneficios");
+		lbl_message1_header.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 18));
+		lbl_message1_header.setForeground(new Color(255,255,255));
+		lbl_message1_header.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_message1_header.setVerticalAlignment(SwingConstants.CENTER);
+		content_section.add(lbl_message1_header);
+		
+		lbl_message2_header = new JLabel();
+		lbl_message2_header.setBounds(0,160,433,41);
+		lbl_message2_header.setText("que obtendrás en BBVA Digital . . .");
+		lbl_message2_header.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 18));
+		lbl_message2_header.setForeground(new Color(255,255,255));
+		lbl_message2_header.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_message2_header.setVerticalAlignment(SwingConstants.CENTER);
+		content_section.add(lbl_message2_header);
+		
+		btn_learn_more = new RoundedPanel();
+		btn_learn_more.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btn_learn_more.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				btn_learn_more.setBackground(backgroundColorButtonsEntered);
+				lbl_icon_read_more.setIcon(icon.READ_MORE_ABOUT_BENEFITS_ENTERED);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btn_learn_more.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+				btn_learn_more.setBackground(backgroundColorButtonsExited);
+				lbl_icon_read_more.setIcon(icon.READ_MORE_ABOUT_BENEFITS_EXITED);
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				dispose();
+				benefits.setVisible(true);
+			}
+		});
+		btn_learn_more.setBounds(69,260,295,50);
+		btn_learn_more.setBackground(backgroundColorButtonsExited);
+		((RoundedPanel) btn_learn_more ).setCornerRadius(10);
+		btn_learn_more.setOpaque(false);
+		btn_learn_more.setLayout(null);
+		content_section.add(btn_learn_more);
+		
+		btn_register = new RoundedPanel();
+		btn_register.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btn_register.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				btn_register.setBackground(backgroundColorButtonsEntered);
+				lbl_icon_register.setIcon(icon.REGISTER_ACCOUNT_ENTERED);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btn_register.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+				btn_register.setBackground(backgroundColorButtonsExited);
+				lbl_icon_register.setIcon(icon.REGISTER_ACCOUNT_EXITED);
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				dispose();
+				registerClient.setVisible(true);
+			}
+		});
+		btn_register.setBounds(69,345,295,50);
+		btn_register.setBackground(backgroundColorButtonsExited);
+		((RoundedPanel) btn_register ).setCornerRadius(10);
+		btn_register.setOpaque(false);
+		btn_register.setLayout(null);
+		content_section.add(btn_register);
+		
+		lbl_txt_btn_learn_more = new JLabel();
+		lbl_txt_btn_learn_more.setBounds(5,5,247,45);
+		lbl_txt_btn_learn_more.setText("Leer más sobre los beneficios");
+		lbl_txt_btn_learn_more.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 18));
+		lbl_txt_btn_learn_more.setForeground(new Color(255,255,255));
+		lbl_txt_btn_learn_more.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_txt_btn_learn_more.setVerticalAlignment(SwingConstants.CENTER);
+		btn_learn_more.add(lbl_txt_btn_learn_more);
+		
+		lbl_icon_read_more = new JLabel();
+		lbl_icon_read_more.setBounds(245,5,40,45);
+		lbl_icon_read_more.setIcon(icon.READ_MORE_ABOUT_BENEFITS_EXITED);
+		lbl_icon_read_more.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_icon_read_more.setVerticalAlignment(SwingConstants.CENTER);
+		btn_learn_more.add(lbl_icon_read_more);
+		
+		lbl_txt_btn_register = new JLabel();
+		lbl_txt_btn_register.setBounds(5,5,247,45);
+		lbl_txt_btn_register.setText("Quizás en otro momento");
+		lbl_txt_btn_register.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 18));
+		lbl_txt_btn_register.setForeground(new Color(255,255,255));
+		lbl_txt_btn_register.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_txt_btn_register.setVerticalAlignment(SwingConstants.CENTER);
+		btn_register.add(lbl_txt_btn_register);
+		
+		lbl_icon_register = new JLabel();
+		lbl_icon_register.setBounds(245,5,40,45);
+		lbl_icon_register.setIcon(icon.REGISTER_ACCOUNT_EXITED);
+		lbl_icon_register.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_icon_register.setVerticalAlignment(SwingConstants.CENTER);
+		btn_register.add(lbl_icon_register);
+	}
+	
+	@SuppressWarnings("unused")
+	private static void addPopup(Component component, final JPopupMenu popup) {
+		component.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			private void showMenu(MouseEvent e) {
+				popup.show(e.getComponent(), e.getX(), e.getY());
+			}
+		});
+	}
+}
+
+/**
+	 * @see Attributes for the management of the layer
+	 */
+	
+	//private static int initial_position_x = 200;
+	//private static LayerButton[] layer_button = new LayerButton[5];s

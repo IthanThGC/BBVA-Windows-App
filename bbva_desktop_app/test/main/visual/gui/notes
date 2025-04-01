@@ -1,0 +1,21 @@
+ANTES DE INGRESAR EL EMAIL ADICIONAL:
+
+		lbl_phone_number_principal.setBounds(27,130,300,40);
+		
+		lbl_phone_number_secundary.setBounds(27,232,300,40);
+		
+		txt_phone_number_principal.setBounds(27,170,320,37);
+	
+		txt_phone_number_secundary.setBounds(27,271,320,37);
+		
+		
+DESPUES DE INGRESAR EL EMAIL ADICIONAL:
+
+		lbl_phone_number_principal.setBounds(27,153,300,40);
+		
+		lbl_phone_number_secundary.setBounds(27,255,300,40);
+		
+		txt_phone_number_principal.setBounds(27,193,320,37);
+		
+		txt_phone_number_secundary.setBounds(27,294,320,37);
+		
