@@ -5,7 +5,7 @@ import javax.swing.JOptionPane;
 
 public abstract class ControlSpecialCases {
 	
-	/**@author Ethan T. Anwar Pagourtzis*/
+	/**@author Ethan T. Godínez Cisneros */
 
 	protected static final String PLACEHOLDER = "Número teléfonico";
 	/**
@@ -63,12 +63,9 @@ public abstract class ControlSpecialCases {
 	}
 	
 	private void initializedMonthsOfYearArray() {
-		for (int i = 0; i < 4; i++) 
-		{
-			for (int j = 0; j < 3; j++) 
-			{
-				if (ACTUAL_MONTH.equals(MONTHS_BIDIMENSIONAL_FORMAT[i][j])) 
-				{
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 3; j++) {
+				if (ACTUAL_MONTH.equals(MONTHS_BIDIMENSIONAL_FORMAT[i][j])) {
 					POSITION_OF_ACTUAL_MONTH[0] = i;
 					POSITION_OF_ACTUAL_MONTH[1] = j;
 					i = 4; j = 3;// Forced to break loop
@@ -83,8 +80,7 @@ public abstract class ControlSpecialCases {
 	 * <p>
 	 */
 	private void setActualMonth() {
-		switch (Calendar.getInstance().get(Calendar.MONTH)) 
-		{
+		switch (Calendar.getInstance().get(Calendar.MONTH)) {
     		case 0: ACTUAL_MONTH = "Enero";      break;
     		case 1: ACTUAL_MONTH = "Febrero";    break;
     		case 2: ACTUAL_MONTH = "Marzo";      break;
@@ -119,9 +115,7 @@ public abstract class ControlSpecialCases {
 	 * </p>
 	 */
 	protected boolean isPhoneNumberDigitsCorrect(String phoneNumber) {
-		if ((phoneNumber.length() < 10) 
-				|| (phoneNumber.length() > 10)) return false;
-		return true;
+		return ((phoneNumber.length() < 10) || (phoneNumber.length() > 10));
 	}
 	
 	/**
@@ -137,7 +131,7 @@ public abstract class ControlSpecialCases {
 				&& (secondPhoneNumber.length() == 0) || (secondPhoneNumber.equals(PLACEHOLDER)))
 				
 				|| ((mainPhoneNumber.length() == 0) || (mainPhoneNumber.equals(PLACEHOLDER))
-						|| (secondPhoneNumber.length() == 0) || (secondPhoneNumber.equals(PLACEHOLDER))))
+						|| (secondPhoneNumber.length() == 0) || (secondPhoneNumber.equals(PLACEHOLDER)))) 
 		{
 			JOptionPane.showMessageDialog(null,
 					"Algún número telefónico no es correcto.\nRevisa tus datos.\n\n",
@@ -145,7 +139,6 @@ public abstract class ControlSpecialCases {
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
-		
 		return true;
 	}
 	
@@ -159,9 +152,7 @@ public abstract class ControlSpecialCases {
 	 */
 	protected boolean isCurpValidate(String curp) {
 		final int SIZE_CHARACTERES = 18;
-		if (curp.length() < SIZE_CHARACTERES 
-			|| curp.length() > SIZE_CHARACTERES) return false;
-		return true;
+		return ((curp.length() < SIZE_CHARACTERES) || (curp.length() > SIZE_CHARACTERES));
 	}
 	
 	/**
@@ -171,12 +162,8 @@ public abstract class ControlSpecialCases {
 	 * </p>
 	 */
 	protected boolean isStateResidenceExist(String MexicoStates[], String residenceState) {
-		for (int i = 0; i < MexicoStates.length; i++) 
-		{
-			if (MexicoStates[i].equals(residenceState)) 
-			{
-				return true;
-			}
+		for (int i = 0; i < MexicoStates.length; i++) {
+			if (MexicoStates[i].equals(residenceState)) return true;
 		}
 		/**<strong>authentic = false</strong>**/
 		return false;
@@ -191,19 +178,13 @@ public abstract class ControlSpecialCases {
 	 *         for use the application
 	 * </p>
 	 */
-	protected boolean isAgeClientAuthorized(int day, String month, int year) {
-		boolean authorized = false;
-		
+	protected boolean isAgeClientAuthorized(int day, String month, int year) {		
 		//does the date exist?
-		if (findNonExistingDate(day, month, year))
-		{
+		if (findNonExistingDate(day, month, year)) {
 			//are they of legal age?
-			if (validate(day, month, year))
-			{
-				return authorized = true;
-			}
+			if (validate(day, month, year)) return true;
 		}
-		return authorized;
+		return false;
 	}
 	
 	/**
@@ -217,34 +198,21 @@ public abstract class ControlSpecialCases {
 	protected boolean isAgeClientAuthorized1(int day, String month, int year) {
 		boolean authorized = false;
 		
-		if (!(findNonExistingDate(day, month, year))) 
-		{
-			for (int i = 0; i < MONTHS_OF_THE_YEAR_CATEGORY1.length; i++) 
-			{
-				if (month.equals(MONTHS_OF_THE_YEAR_CATEGORY1[i])) 
-				{
-					if (validate(day, month, year))
-					{
+		if (!(findNonExistingDate(day, month, year))) {
+			for (int i = 0; i < MONTHS_OF_THE_YEAR_CATEGORY1.length; i++) {
+				if (month.equals(MONTHS_OF_THE_YEAR_CATEGORY1[i])) {
+					if (validate(day, month, year)) {
 						return authorized = true;
 					}
-				}
-				else 
-				{
-					for (int j = 0; j < MONTHS_OF_THE_YEAR_CATEGORY2.length; j++)
-					{
-						if (month.equals(MONTHS_OF_THE_YEAR_CATEGORY2[j]))
-						{
-							if (validate(day, month, year))
-							{
+				} else {
+					for (int j = 0; j < MONTHS_OF_THE_YEAR_CATEGORY2.length; j++) {
+						if (month.equals(MONTHS_OF_THE_YEAR_CATEGORY2[j])) {
+							if (validate(day, month, year)) {
 								return authorized = true;
 							}
-						}
-						else
-						{
-							if (month.equals(MONTHS_OF_THE_YEAR_CATEGORY3))
-							{
-								if (validate(day, month, year))
-								{
+						} else {
+							if (month.equals(MONTHS_OF_THE_YEAR_CATEGORY3)) {
+								if (validate(day, month, year)) {
 									return authorized = true;
 								}
 							}
@@ -268,32 +236,22 @@ public abstract class ControlSpecialCases {
 	private boolean findNonExistingDate(int day, String month, int year) {
 		boolean existingDate = false;
 		
-		if (getActualMonth().equals("Febrero"))
-		{
-			if ((day > 0) && (day <= 28))
-			{
+		if (getActualMonth().equals("Febrero")) {
+			if ((day > 0) && (day <= 28)) {
 				return existingDate = true;
 			}
-		}
-		else
-		{
-			for (int i = 0; i < MONTHS_OF_THE_YEAR_CATEGORY1.length; i++)
-			{
-				if (month.equals(MONTHS_OF_THE_YEAR_CATEGORY1[i]))
-				{
-					if ((day > 0) && (day <= 31))
-					{
+		} else {
+			for (int i = 0; i < MONTHS_OF_THE_YEAR_CATEGORY1.length; i++) {
+				if (month.equals(MONTHS_OF_THE_YEAR_CATEGORY1[i])) {
+					if ((day > 0) && (day <= 31)) {
 						return existingDate = true;
 					}
 				}
-		    }
+		        }
 			
-			for (int j = 0; j < MONTHS_OF_THE_YEAR_CATEGORY2.length; j++)
-			{
-				if (month.equals(MONTHS_OF_THE_YEAR_CATEGORY2[j]))
-				{
-					if ((day > 0) && (day <= 30))
-					{
+			for (int j = 0; j < MONTHS_OF_THE_YEAR_CATEGORY2.length; j++) {
+				if (month.equals(MONTHS_OF_THE_YEAR_CATEGORY2[j])) {
+					if ((day > 0) && (day <= 30)) {
 						return existingDate = true;
 					}
 				}
@@ -339,6 +297,7 @@ public abstract class ControlSpecialCases {
 							
 							return access = false;
 						}
+						
 						//CASE 2 (multiple cases)
 						if (((entryMonth[0] == 0 && POSITION_OF_ACTUAL_MONTH[0] == 0) && (entryMonth[1] > POSITION_OF_ACTUAL_MONTH[1]))
 								|| ((entryMonth[0] > POSITION_OF_ACTUAL_MONTH[0]) 
@@ -347,6 +306,7 @@ public abstract class ControlSpecialCases {
 							if ((ACTUAL_YEAR - year) > LEGAL_AGE) return access = true;
 							return access = false;
 						}
+					
 						//CASE 3 (multiple cases)
 						if (((entryMonth[0] == 0 && POSITION_OF_ACTUAL_MONTH[0] == 0) && (entryMonth[1] < POSITION_OF_ACTUAL_MONTH[1]))
 								|| ((entryMonth[0] < POSITION_OF_ACTUAL_MONTH[0]) 
@@ -367,8 +327,9 @@ public abstract class ControlSpecialCases {
 					break;
 				}
 			}//COLUMN ITERATORR
+	
 		}//ROW ITERATOR
-		
+	
 		return access;
 	}
 }
