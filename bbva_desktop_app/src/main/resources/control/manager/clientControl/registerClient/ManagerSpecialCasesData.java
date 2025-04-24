@@ -3,7 +3,7 @@ package main.resources.control.manager.clientControl.registerClient;
 public class ManagerSpecialCasesData extends ControlSpecialCases {
 	
 	/**
-	 * @author Ethan T. Anwar
+	 * @author Ethan T. Godínez Cisneros
 	 */
 	
 	@SuppressWarnings("unused")
@@ -119,11 +119,8 @@ public class ManagerSpecialCasesData extends ControlSpecialCases {
 	 * @return false if the phone number is not empty
 	 */
 	public boolean isPhoneNumberEmpty(String mainPhoneNumber) {
-		if ((mainPhoneNumber.length() == 0) 
-				|| (mainPhoneNumber.equals(PLACEHOLDER))) return true;
-		
-		return false;
-	}	
+		return ((mainPhoneNumber.length() == 0) || (mainPhoneNumber.equals(PLACEHOLDER)));
+	}
 	
 	/**
 	 * @params The client's: day/month/year -> dd/mm/yyyy format 
@@ -132,8 +129,8 @@ public class ManagerSpecialCasesData extends ControlSpecialCases {
 	 */
 	public boolean isAgeClientAuthorized(int day, String month, int year) {
 		return super.isAgeClientAuthorized(this.day = day,
-				                           this.month = month,
-				                           this.year = year);
+				                   this.month = month,
+				                   this.year = year);
 	}
 	
 	/**
@@ -142,8 +139,7 @@ public class ManagerSpecialCasesData extends ControlSpecialCases {
 	 * @return false is the state name proportioned for the don't exist
 	 */
 	public boolean isStateResidenceExist(String residenceState) {
-		return super.isStateResidenceExist(MexicoStates,
-				                           this.residenceState = residenceState);
+		return super.isStateResidenceExist(MexicoStates, this.residenceState = residenceState);
 	}
 		
 	/**
