@@ -368,8 +368,7 @@ public class RegisterAdditionalEmail extends JDialog {
 			    "@proton.com"
 		};
 		
-		for (int i = 0; i < domains.length; i++) 
-		{
+		for (int i = 0; i < domains.length; i++) {
 			box_email_domains.addItem(makeObj(String.valueOf(domains[i])));
 		}
 	}
@@ -380,10 +379,7 @@ public class RegisterAdditionalEmail extends JDialog {
 	 * @return False if the input email is not empty
 	 */
 	private boolean isEmailEmptyOrNull(final JTextField email) {
-		if ((email.getText().length() == 0) 
-				|| (email.getText().equals(PLACEHOLDER))) return true;
-		
-		return false;
+		return ((email.getText().length() == 0) || (email.getText().equals(PLACEHOLDER)));
 	}
 	
 	/**
@@ -393,9 +389,7 @@ public class RegisterAdditionalEmail extends JDialog {
 	 */
 	@SuppressWarnings("rawtypes")
 	private boolean isUnselectedDomainItem(final JComboBox item) {
-		if (item.getSelectedIndex() == 0) return true;
-		
-		return false;
+		return (item.getSelectedIndex() == 0);
 	}
 	
 	/*
@@ -447,3 +441,4 @@ public class RegisterAdditionalEmail extends JDialog {
 		return emailAdded;
 	}
 }
+
